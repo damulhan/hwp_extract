@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# hwp-extract - Shell wrapper for HWP/HWPX text extractor
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+JAR_FILE="$SCRIPT_DIR/build/libs/hwp-extractor-1.0.0.jar"
+
+# Check if JAR exists
+if [ ! -f "$JAR_FILE" ]; then
+    echo "Error: JAR file not found at $JAR_FILE"
+    echo "Please build the project first with: ./gradlew build"
+    exit 1
+fi
+
+# Execute the JAR with all arguments
+exec java -jar "$JAR_FILE" "$@"
