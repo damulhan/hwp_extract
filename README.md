@@ -52,7 +52,7 @@ Kotlin 기반 HWP/HWPX 파일 텍스트 추출 유틸리티
 - `-m, --extract-meta`: 메타데이터 추출 (제목, 작성자 등)
 - `-f, --extract-files`: 임베디드 파일 추출
 - `-o, --output-directory OUTPUT_DIRECTORY`: 출력 디렉토리 지정 (지정하지 않으면 stdout)
-- `-p, --password PASSWORD`: 암호화된 파일의 비밀번호
+- `-p, --password PASSWORD`: 암호화된 파일의 비밀번호 (hwpx전용)
 - `-v, --version`: 버전 정보 표시
 
 ### 사용 예제
