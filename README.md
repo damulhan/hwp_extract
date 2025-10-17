@@ -107,27 +107,6 @@ Kotlin 기반 HWP/HWPX 파일 텍스트 추출 유틸리티
 java -jar build/libs/hwp-extractor-1.0.0.jar document.hwp
 ```
 
-## 프로젝트 구조
-
-```
-hwp_extractor_java/
-├── build.gradle.kts          # Gradle 빌드 설정
-├── settings.gradle.kts        # Gradle 프로젝트 설정
-├── gradle.properties          # Gradle 속성
-├── hwp-extract               # Shell 실행 스크립트
-├── README.md                 # 이 파일
-└── src/
-    └── main/
-        └── kotlin/
-            └── kr/
-                └── etna/
-                    └── hwpextractor/
-                        ├── Main.kt              # CLI 진입점
-                        ├── HwpExtractor.kt      # 메인 추출기
-                        ├── HwpTextExtractor.kt  # HWP 추출 구현
-                        └── HwpxTextExtractor.kt # HWPX 추출 구현
-```
-
 ## 의존성
 
 - [hwplib](https://github.com/neolord0/hwplib) - HWP 파일 처리
