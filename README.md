@@ -13,7 +13,7 @@ Kotlin 기반 HWP/HWPX 파일 텍스트 추출 유틸리티
 
 ## 요구사항
 
-- Java 17 이상
+- Java 11 이상
 - Gradle 7.0 이상
 
 ## 빌드
