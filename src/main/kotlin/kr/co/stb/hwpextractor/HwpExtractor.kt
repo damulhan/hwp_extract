@@ -7,7 +7,8 @@ class HwpExtractor(
     private val extractMeta: Boolean = false,
     private val extractFiles: Boolean = false,
     private val outputDirectory: String? = null,
-    private val password: String? = null
+    private val password: String? = null,
+    private val outputToConsole: Boolean = false
 ) {
     fun extract(filePath: String) {
         val file = File(filePath)
@@ -28,11 +29,11 @@ class HwpExtractor(
 
         when (extension) {
             "hwp" -> {
-                val extractor = HwpTextExtractor(debug, extractMeta, extractFiles, outputDirectory, password)
+                val extractor = HwpTextExtractor(debug, extractMeta, extractFiles, outputDirectory, password, outputToConsole)
                 extractor.extract(file)
             }
             "hwpx" -> {
-                val extractor = HwpxTextExtractor(debug, extractMeta, extractFiles, outputDirectory, password)
+                val extractor = HwpxTextExtractor(debug, extractMeta, extractFiles, outputDirectory, password, outputToConsole)
                 extractor.extract(file)
             }
             else -> {

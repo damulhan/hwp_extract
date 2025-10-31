@@ -7,6 +7,12 @@ import kotlin.system.exitProcess
 const val VERSION = "1.0.0"
 
 fun main(args: Array<String>) {
+    // Launch GUI mode if no arguments provided
+    if (args.isEmpty()) {
+        launchGui()
+        return
+    }
+
     val options = Options().apply {
         addOption("h", "help", false, "Show this help message and exit")
         addOption("d", "debug", false, "Enable debug mode")
@@ -14,7 +20,9 @@ fun main(args: Array<String>) {
         addOption("f", "extract-files", false, "Extract embedded files")
         addOption("o", "output-directory", true, "Output directory for extracted files")
         addOption("p", "password", true, "Password for encrypted files")
+        addOption("c", "console", false, "Output text to console instead of file")
         addOption("v", "version", false, "Show version information")
+        addOption("g", "gui", false, "Launch GUI mode")
     }
 
     val parser: CommandLineParser = DefaultParser()
@@ -33,6 +41,11 @@ fun main(args: Array<String>) {
             exitProcess(0)
         }
 
+        if (cmd.hasOption("gui")) {
+            launchGui()
+            return
+        }
+
         val targetFiles = cmd.argList
         if (targetFiles.isEmpty()) {
             System.err.println("hwp-extract: error: the following arguments are required: target_file")
@@ -45,13 +58,15 @@ fun main(args: Array<String>) {
         val extractFiles = cmd.hasOption("extract-files")
         val outputDir = cmd.getOptionValue("output-directory")
         val password = cmd.getOptionValue("password")
+        val outputToConsole = cmd.hasOption("console")
 
         val extractor = HwpExtractor(
             debug = debug,
             extractMeta = extractMeta,
             extractFiles = extractFiles,
             outputDirectory = outputDir,
-            password = password
+            password = password,
+            outputToConsole = outputToConsole
         )
 
         var hasError = false
@@ -80,7 +95,7 @@ fun main(args: Array<String>) {
 
 fun printUsage(formatter: HelpFormatter, options: Options) {
     formatter.printHelp(
-        "hwp-extract [-h] [--debug] [--extract-meta] [--extract-files] " +
+        "hwp-extract [-h] [--debug] [--extract-meta] [--extract-files] [--console] " +
                 "[--output-directory OUTPUT_DIRECTORY] [--password PASSWORD] [--version] " +
                 "target_file [target_file ...]",
         options

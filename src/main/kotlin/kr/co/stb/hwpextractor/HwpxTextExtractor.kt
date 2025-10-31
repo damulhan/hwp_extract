@@ -15,7 +15,8 @@ class HwpxTextExtractor(
     private val extractMeta: Boolean = false,
     private val extractFiles: Boolean = false,
     private val outputDirectory: String? = null,
-    private val password: String? = null
+    private val password: String? = null,
+    private val outputToConsole: Boolean = false
 ) {
     fun extract(file: File) {
         if (debug) {
@@ -30,10 +31,10 @@ class HwpxTextExtractor(
 
         val text = extractText(hwpxFile)
 
-        if (outputDirectory != null) {
-            saveToFile(file, text)
-        } else {
+        if (outputToConsole) {
             println(text)
+        } else {
+            saveToFile(file, text)
         }
 
         if (extractFiles) {
@@ -122,14 +123,15 @@ class HwpxTextExtractor(
     }
 
     private fun saveToFile(sourceFile: File, text: String) {
-        val outputDir = File(outputDirectory!!)
-        outputDir.mkdirs()
+        val outputDir = if (outputDirectory != null) {
+            File(outputDirectory).apply { mkdirs() }
+        } else {
+            sourceFile.parentFile
+        }
 
         val outputFile = File(outputDir, "${sourceFile.nameWithoutExtension}.txt")
         outputFile.writeText(text, Charsets.UTF_8)
 
-        if (debug) {
-            println("Text saved to: ${outputFile.absolutePath}")
-        }
+        println("Text saved to: ${outputFile.absolutePath}")
     }
 }
