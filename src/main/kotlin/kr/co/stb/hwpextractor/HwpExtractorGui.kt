@@ -60,7 +60,58 @@ class HwpExtractorGui : JFrame("HWP/HWPX 텍스트 추출기 v$VERSION") {
         viewMenu.add(themeMenu)
         menuBar.add(viewMenu)
 
+        // About 메뉴
+        val helpMenu = JMenu("도움말")
+        val aboutItem = JMenuItem("정보").apply {
+            addActionListener {
+                showAboutDialog()
+            }
+        }
+        helpMenu.add(aboutItem)
+        menuBar.add(helpMenu)
+
         jMenuBar = menuBar
+    }
+
+    private fun showAboutDialog() {
+        val aboutMessage = """
+            <html>
+            <body style='width: 300px; padding: 10px;'>
+            <h2 style='margin-top: 0;'>Hwp2Text</h2>
+            <p style='margin: 10px 0;'>HWP/HWPX 파일 텍스트 추출 도구</p>
+            <p style='margin: 10px 0;'>버전: $VERSION</p>
+            <hr style='margin: 15px 0;'>
+            <p style='margin: 10px 0;'><b>테레비 - 개발관련자료:</b></p>
+            <p style='margin: 5px 0;'><a href='https://terebee.tistory.com/'>https://terebee.tistory.com/</a></p>
+            </body>
+            </html>
+        """.trimIndent()
+
+        val editorPane = JEditorPane("text/html", aboutMessage).apply {
+            isEditable = false
+            isOpaque = false
+            addHyperlinkListener { e ->
+                if (e.eventType == javax.swing.event.HyperlinkEvent.EventType.ACTIVATED) {
+                    try {
+                        Desktop.getDesktop().browse(e.url.toURI())
+                    } catch (ex: Exception) {
+                        JOptionPane.showMessageDialog(
+                            this@HwpExtractorGui,
+                            "브라우저를 열 수 없습니다: ${e.url}",
+                            "오류",
+                            JOptionPane.ERROR_MESSAGE
+                        )
+                    }
+                }
+            }
+        }
+
+        JOptionPane.showMessageDialog(
+            this,
+            editorPane,
+            "정보",
+            JOptionPane.INFORMATION_MESSAGE
+        )
     }
 
     private fun switchTheme(isLight: Boolean) {
